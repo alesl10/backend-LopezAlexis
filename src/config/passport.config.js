@@ -80,16 +80,16 @@ const initializePassport = () => {
 	);
 
 	passport.use("github", new GitHubStrategy({
-		clientID: "<CLIENTID>",
-		clientSecret: "<CLIENTSECRET>",
-		callbackURL: "http://localhost:8080/api/session/githubCallback",
+		clientID: "Iv1.2d53f16330550c0f",
+		clientSecret: "38ef1ef805835b53c1222deaace9e61cfe5eb2d3",
+		callbackURL: "http://localhost:8080/api/session/githubcallback",
 	}, async (accesToken, refreshToken, profile, done) => {
 		try {
 			const user = await userModel.findOne({ email: profile._json.email });
 			if (!user) {
 				const newUser = {
-					first_name: profile._json.name.split(" ")[0],
-					last_name: profile._json.name.split(" ")[2],
+					first_name: profile._json.name,
+					last_name:'',
 					email: profile._json.email,
 					password: "",
 				};

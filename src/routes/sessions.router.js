@@ -5,6 +5,22 @@ import passport from "passport";
 
 const router = Router();
 
+router.get('/github', passport.authenticate('github', { scope: ['user:email'] }), async (req, res) => {
+
+
+
+})
+
+
+
+router.get('/githubcallback', passport.authenticate('github', { failureRedirect: '/login' }), async (req, res) => {
+
+	req.session.user = req.user
+
+	res.redirect('/')
+
+})
+
 
 // Login
 router.post("/login", passport.authenticate('login'), async (req, res) => {
@@ -15,7 +31,7 @@ router.post("/login", passport.authenticate('login'), async (req, res) => {
 			email: req.user.email,
 			role: req.user.role,
 		};
-		return res.status(200).send({status: 'success', response: 'User loged'});
+		return res.status(200).send({ status: 'success', response: 'User loged' });
 	} catch (err) {
 		return res.status(500).json({ error: err.message });
 	};
@@ -30,7 +46,7 @@ router.post("/register", passport.authenticate("register"), async (req, res) => 
 			email: req.user.email,
 			role: req.user.role,
 		};
-		return res.status(200).send({status: 'success', response: 'User created'});
+		return res.status(200).send({ status: 'success', response: 'User created' });
 	} catch (err) {
 		return res.status(500).json({ status: 'error', response: err.message });
 	};
