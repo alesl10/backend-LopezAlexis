@@ -2,10 +2,18 @@ import passport from 'passport';
 import local from 'passport-local';
 import GitHubStrategy from "passport-github2";
 import { userModel } from '../dao/mongo/models/user.model.js';
-import { createHash, isValidPassword } from '../utils.js';
+import { createHash, isValidPassword } from '../utils/has.utils.js';
 import { adminModel } from '../dao/mongo/models/admin.model.js';
+import config from '../config/enviroment.config.js';
+
+
+const githubClientId = config.GITHUB_CLIENT_ID;
+const githubClientSecret = config.GITHUB_CLIENT_SECRET;
+const githubCallbackUrl = config.GITHUB_CALLBACK_URL;
 
 const LocalStrategy = local.Strategy;
+
+
 const initializePassport = () => {
 	passport.use(
 		'register',
@@ -80,9 +88,9 @@ const initializePassport = () => {
 	);
 
 	passport.use("github", new GitHubStrategy({
-		clientID: "Iv1.2d53f16330550c0f",
-		clientSecret: "38ef1ef805835b53c1222deaace9e61cfe5eb2d3",
-		callbackURL: "http://localhost:8080/api/session/githubcallback",
+		clientID: githubClientId,
+		clientSecret: githubClientSecret,
+		callbackURL: githubCallbackUrl,
 	}, async (accesToken, refreshToken, profile, done) => {
 		try {
 			const user = await userModel.findOne({ email: profile._json.email });

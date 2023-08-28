@@ -7,7 +7,6 @@ import cookieParser from "cookie-parser";
 const router = Router();
 router.use(cookieParser("<COOKIESECRET>"));
 
-
 router.get("/login", async (req, res) => {
 	try {
 		if (req.session.user) {
