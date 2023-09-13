@@ -1,113 +1,66 @@
-import { productModel } from "../dao/mongo/models/product.model.js";
+import { productsRepository } from '../repositories/repository.js';
 
-// todos losproductos
 export const products = async (req, res) => {
 	try {
-		const result = await productModel.find();
-		return res.status(200).json({ status: "success", payload: result });
+		const payload = await productsRepository.getProducts();
+		if (typeof(payload) == 'string') return res.status(404).json({ status: 'error', message: payload });
+		return res.status(200).json({ status: 'success', products: payload });
 	} catch (err) {
-		return res.status(500).json({ error: err.message });
-	};
+		return res.status(500).json({ status: 'error', error: err.message });
+	}
 };
 
-// producto por id
 export const product = async (req, res) => {
 	try {
-		const { id } = req.params;
-		const result = await productModel.findById(id);
-
-		if (!result) {
-			return res.status(200).send(`No se encontro el producto ${id}`);
-		};
-
-		return res.status(200).json({ status: "success", payload: result });
+		const { pid } = req.params;
+		const payload = await productsRepository.getProduct(pid);
+		if (typeof(payload) == 'string') return res.status(404).json({ status: 'error', message: payload });
+		return res.status(200).json({ status: 'success', product: payload });
 	} catch (err) {
-		return res.status(500).json({ error: err.message });
-	};
+		return res.status(500).json({ status: 'error', error: err.message });
+	}
 };
 
-// agregar producto
-export const createProduct = async (req, res) => {
+export const insertProduct = async (req, res) => {
 	try {
-		const { title, description, code, price, stock, category } = req.body;
-
-		if (
-			!title ||
-			!description ||
-			!code ||
-			!price ||
-			!stock ||
-			!category ||
-			!price
-		) {
-			return res.status(200).send(`todos los campos son obligatorios`);
-		};
-
-		const result = await productModel.create({
-			title,
-			description,
-			code: code.replace(/\s/g, "").toLowerCase(),
-			price,
-			stock,
-			category: category.toLowerCase(),
-		});
-
-		return res.status(200).json({ status: "success", payload: result });
+		const newProduct = req.body;
+		const payload = await productsRepository.createProduct(newProduct);
+		if (typeof(payload) == 'string') return res.status(404).json({ status: 'error', message: payload });
+		return res.status(200).json({ status: 'success', product: payload });
 	} catch (err) {
-		return res.status(500).json({ error: err.message });
-	};
+		return res.status(500).json({ status: 'error', error: err.message });
+	}
 };
 
-// actualizar producto
-export const updateProduct = async (req, res) => {
+export const editProduct = async (req, res) => {
 	try {
-		const { id } = req.params;
-		const { title, description, code, price, stock, category } = req.body;
-		const product = await productModel.findById(id);
-
-		if (!product) {
-			return res.status(200).send(`no se encontro el producto ${id}`);
-		};
-
-		if (
-			!title ||
-			!description ||
-			!code ||
-			!price ||
-			!stock ||
-			!category ||
-			!price
-		) {
-			return res.status(200).send(`complete todos los campos para seguir`);
-		};
-		
-		const newproduct = {
-			title,
-			description,
-			code: code.replace(/\s/g, "").toLowerCase(),
-			price,
-			stock,
-			category: category.toLowerCase(),
-		};
-		await productModel.updateOne({ _id: id }, newproduct);
-
-		const result = await productModel.findById(id);
-		return res.status(200).json({ status: "success", payload: result });
+		const { pid } = req.params;
+		const newProduct = req.body;
+		const payload = await productsRepository.updateProduct(pid, newProduct);
+		if (typeof(payload) == 'string') return res.status(404).json({ status: 'error', message: payload });
+		return res.status(200).json({ status: 'success', product: payload });
 	} catch (err) {
-		return res.status(500).json({ error: err.message });
-	};
+		return res.status(500).json({ status: 'error', error: err.message });
+	}
 };
 
-// borrar producto
-export const deleteProduct = async (req, res) => {
+export const eraseProduct = async (req, res) => {
 	try {
-		const { id } = req.params;
-		await productModel.deleteOne({ _id: id });
-
-		const result = await productModel.find();
-		return res.status(200).json({ status: "success", payload: result });
+		const { pid } = req.params;
+		const payload = await productsRepository.deleteProduct(pid);
+		if (typeof(payload) == 'string') return res.status(404).json({ status: 'error', message: payload });
+		return res.status(200).json({ status: 'success', products: payload });
 	} catch (err) {
-		return res.status(500).json({ error: err.message });
-	};
+		return res.status(500).json({ status: 'error', error: err.message });
+	}
 };
 
+export const mockingProducts = async (req, res) => {
+	try {
+		const payload = await productsRepository.generateProducts(req, res);
+		if (typeof(payload) == 'string') return res.status(404).json({ status: 'error', message: payload });
+		return res.status(200).json({ status: 'success', products: payload });
+	} catch (err) {
+		return res.status(500).json({ status: 'error', error: err.message });
+	}
+};

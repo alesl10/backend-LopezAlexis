@@ -1,27 +1,19 @@
-<div class="login-container">
-	<h1 class="login-title">Iniciar sesion</h1>
+<div class='login-container'>
 
-  <div>
-    <p>¿Todavia no tienes un usuario?</p>
-    <a href="/register">Registrate para poder ver nuestros productos</a>
-  </div>
+	<p>Login</p>
+	<a href='/register'>Sign up</a>
+	<a href='/api/sessions/github'>Github</a>
 
-<div>
-  <form id="loginForm">
+	<form class='login-form'>
+		<label>Email</label>
+		<input type='email' name='email' required />
 
-    <label>Email</label>
-    <input type="email" name="email" required>
+		<label>Password</label>
+		<input type='password' name='password' required />
 
-    <label>Contraseña</label>
-    <input type="password" name="password" required>
+		<input type='submit' value='Send' class='login-button' />
+	</form>
 
-    <input type="submit" value="Enviar">
-  </form>
-</div>
-<div>
-  <a href="/api/session/github"><button>autenticarse con Git</button></a>
-</div>
-	
 </div>
 
-<script src="/js/login.js"></script>
+<script src='/js/login.js'></script>

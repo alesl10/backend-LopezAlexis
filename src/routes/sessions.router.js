@@ -1,73 +1,20 @@
-import { Router } from "express";
-import passport from "passport";
-
-
+import { Router } from 'express';
+import {
+	login,
+	register,
+	current,
+	logout,
+	github,
+	githubCallback,
+} from '../controllers/sessions.controller.js';
 
 const router = Router();
 
-router.get('/github', passport.authenticate('github', { scope: ['user:email'] }), async (req, res) => {
-
-
-
-})
-
-
-
-router.get('/githubcallback', passport.authenticate('github', { failureRedirect: '/login' }), async (req, res) => {
-
-	req.session.user = req.user
-
-	res.redirect('/')
-
-})
-
-
-// Login
-router.post("/login", passport.authenticate('login'), async (req, res) => {
-	try {
-		req.session.user = {
-			first_name: req.user.first_name,
-			last_name: req.user.last_name,
-			email: req.user.email,
-			role: req.user.role,
-		};
-		return res.status(200).send({ status: 'success', response: 'User loged' });
-	} catch (err) {
-		return res.status(500).json({ error: err.message });
-	};
-});
-
-// registro
-router.post("/register", passport.authenticate("register"), async (req, res) => {
-	try {
-		req.session.user = {
-			first_name: req.user.first_name,
-			last_name: req.user.last_name,
-			email: req.user.email,
-			role: req.user.role,
-		};
-		return res.status(200).send({ status: 'success', response: 'User created' });
-	} catch (err) {
-		return res.status(500).json({ status: 'error', response: err.message });
-	};
-});
-
-// desloguearse:
-router.post("/logout", (req, res) => {
-	try {
-		req.session.destroy((err) => {
-			if (!err) {
-				return res.status(200).render("login", {
-					style: "styles.css",
-					documentTitle: "Login",
-				});
-			};
-
-			return res.status(500).send({ status: `Logout error`, payload: err });
-		});
-	} catch (err) {
-		return res.status(500).json({ error: err.message });
-	};
-});
+router.post('/login', login);
+router.post('/register', register);
+router.get('/current', current);
+router.get('/github', github);
+router.get('/githubCallback', githubCallback);
+router.post('/logout', logout);
 
 export default router;

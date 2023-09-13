@@ -1,13 +1,16 @@
-<div class="products-container">
-	<h1 class="products-title">Detalle producto</h1>
+<div class='product-container'>
+	<div class='product-item'>
+		<p>Product: {{product.title}}</p>
+		<p>Description: {{product.description}}</p>
+		<p>Price: ${{product.price}}</p>
+		<p>Stock: {{product.stock}}</p>
+		<p>Category: {{product.category}}</p>
+	</div>
 
-		<div class="products-item">
-			<p class="products-text">Product: {{product.title}}</p>
-			<p class="products-text">Description: {{product.description}}</p>
-			<p class="products-text">Price: ${{product.price}}</p>
-			<p class="products-text">Stock: {{product.stock}}</p>
-			<p class="products-text">Category: {{product.category}}</p>
-			<a href="/api/carts/{{cart}}/product/{{product._id}}" class="products-link-cart" target="_blank">Agregar a carrito</a>
-		</div>
-	
+	<form class='product-form' cart='{{cart}}' product='{{product._id}}'>
+		<input type='submit' value='Add to cart' class='product-button' />
+	</form>
+
 </div>
+
+<script src='/js/products.js'></script>

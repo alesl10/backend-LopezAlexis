@@ -1,18 +1,32 @@
-{{!-- modificado --}}
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8' />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+		<link rel='preconnect' href='https://fonts.googleapis.com' />
+		<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+		<link
+			href='https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap'
+			rel='stylesheet'
+		/>
+		<link rel='stylesheet' href='/css/main.css' />
+		<link rel='stylesheet' href='/css/{{style}}' />
 
-<!DOCTYPE html>
-<html lang="en">
+		<title>{{documentTitle}}</title>
+	</head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/{{style}}">
-  <title>{{documentTitle}}</title>
-</head>
+	{{#if header}}
+		<header>
+			<ul class='header-container'>
+				<li><a class='header-link' href='/'>Home</a></li>
+				<li><a class='header-link' href='/chat'>Chat</a></li>
+				<li><a class='header-link' href='/products'>Products</a></li>
+				<li><a class='header-link' href='/cart/{{cart}}'>Cart</a></li>
+			</ul>
+		</header>
+	{{/if}}
 
-<body>
-  {{{body}}}
-</body>
+	<body>
+		{{{body}}}
+	</body>
 
 </html>

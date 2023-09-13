@@ -1,26 +1,17 @@
+const chatBox = document.querySelector(".input-text");
+const user = document.getElementById("user").getAttribute("data-email");
 const socket = io();
-let user;
-let chatBox = document.querySelector(".input-text");
 
-// Alerta para solicitar y guardar mail:
 Swal.fire({
 	title: "Welcome",
-	text: "Please enter your email",
-	input: "text",
-	inputValidator: (value) => {
-		const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		if (!value.match(regex)) {
-			return `You must to complete with a valid email.`;
-		};
-	},
+	text: "All chats are saved in database",
+	confirmButtonText: "Join",
 	allowOutsideClick: false,
 	allowEscapeKey: false,
-}).then((result) => {
-	user = result.value;
-	socket.emit("user", { user, message: "se unio al chat" });
+}).then(() => {
+	socket.emit("user", { user, message: "Join the chat." });
 });
 
-// Listener para los mesajes:
 socket.on("messagesDB", (data) => {
 	let log = document.querySelector(".chat-message");
 	let messages = "";
@@ -30,9 +21,8 @@ socket.on("messagesDB", (data) => {
 	log.innerHTML = messages;
 });
 
-// Listener del input para detectar al presionar Enter:
 chatBox.addEventListener("keypress", (e) => {
-	if (e.key === "Enter") {
+	if (e.key === "Enter" && chatBox.value.trim().length > 0) {
 		socket.emit("message", { user, message: chatBox.value });
 		chatBox.value = "";
 	}

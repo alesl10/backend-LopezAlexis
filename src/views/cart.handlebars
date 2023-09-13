@@ -1,0 +1,29 @@
+<div class='cart-container'>
+	<div class='cart-list'>
+		{{#each payload}}
+			<div class='cart-item'>
+				<p>{{this._id.title}}</p>
+				<p>${{this._id.price}}</p>
+				<p>x{{this.quantity}}</p>
+				<p><strong>${{multiply this._id.price this.quantity}}</strong></p>
+			</div>
+		{{/each}}
+
+		<div>
+			<p class='cart-total-text'>TOTAL: ${{getTotal payload}}</p>
+			<button class='cart-total-button'>PURCHASE</button>
+		</div>
+
+		<form class='product-form' cart='{{cart}}' product='{{product._id}}'>
+			<input type='submit' value='Add to cart' class='product-button' />
+		</form>
+
+		<form class='cart-form'>
+			<label>Total $</label>
+			<input type="text" value="{{getTotal payload}}" readonly />
+			<input type='submit' value='Send' class='login-button' />
+		</form>
+
+	</div>
+
+</div>

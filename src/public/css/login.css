@@ -1,0 +1,20 @@
+.login-container {
+	display: flex;
+	flex-flow: column nowrap;
+	text-align: center;
+	gap: 30px;
+	margin: 80px;
+}
+
+.login-button {
+	font-size: 16px;
+	padding: 5px;
+	cursor: pointer;
+	background-color: black;
+	border: none;
+	color: white;
+	font-family: 'Comfortaa';
+	font-weight: 600;
+	padding: 10px;
+	border-radius: 10px;
+}

@@ -1,38 +1,44 @@
-{{!-- modificar --}}
-<div class="home">
-	<h1 class="home-title">2 entrega Coderhouse</h1>
-	<form method="post" action="/api/sessions/logout">
-		<p>Bienvenido {{user.email}}</p>
-		<p>{{user.role}}</p>
-		<input type="submit" value="Salir">
-	</form>
-</div>
-<div class="products-container">
-	<h1 class="products-title">Productos</h1>
+<div class='products-container'>
+	<div class='products-list'>
 
-	<div class="products-list">
 			{{#each payload}}
-			<div class="products-item">
-				<p class="products-text">Product: {{this.title}}</p>
-				<p class="products-text">Category: {{this.category}}</p>
-				<p class="products-text">Price: ${{this.price}}</p>
-				<p class="products-text">Stock: {{this.stock}}</p>
-				<button><a href="./products/{{this._id}}">   Ver producto</a></button>
-				<button> <a href="./api/carts/{{../cart}}/product/{{this._id}}"  target="_blank">Agregar a carrito</a></button>
+			<div class="product-item">
+
+				<a href="./product/{{this._id}}" class="product-link">
+					<p>Product: {{this.title}}</p>
+					<p>Category: {{this.category}}</p>
+					<p>Price: ${{this.price}}</p>
+					<p>Stock: {{this.stock}}</p>
+				</a>
+
+				<form
+					class='product-form'
+					cart="{{../cart}}"
+					product="{{this._id}}"
+				>
+				<input type='submit' value='Add to cart' class="product-button" />
+			</form>
+
 			</div>
-			{{/each}}
+		{{/each}}
+
 	</div>
 
-	<div class="paginate-container">
-	{{#if hasPrevPage}}
-		<a href="/products?query={{query}}&limit={{limit}}&page={{prevPage}}&sort={{sort}}"><button class="paginate-button">Previus</button></a>
-	{{/if}}
+	<div class='paginate-container'>
+		{{#if hasPrevPage}}
+			<a
+				href='/products?query={{query}}&limit={{limit}}&page={{prevPage}}&sort={{sort}}'
+			><button class='paginate-button'>Previus</button></a>
+		{{/if}}
 
-	<p class="paginate-current">{{page}}</p>
+		<p class='paginate-current'>{{page}}</p>
 
-	{{#if hasNextPage}}
-		<a href="/products?query={{query}}&limit={{limit}}&page={{nextPage}}&sort={{sort}}"><button class="paginate-button">Next</button></a>
-	{{/if}}
+		{{#if hasNextPage}}
+			<a
+				href='/products?query={{query}}&limit={{limit}}&page={{nextPage}}&sort={{sort}}'
+			><button class='paginate-button'>Next</button></a>
+		{{/if}}
 	</div>
-	
 </div>
+
+<script src='/js/products.js'></script>
