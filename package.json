@@ -11,7 +11,6 @@
     "start:development": "SET NODE_ENV=development && nodemon ./src/app.js",
     "format": "prettier --write \"**/*.js\""
   },
- 
   "dependencies": {
     "@faker-js/faker": "^8.0.2",
     "bcrypt": "^5.1.0",
@@ -21,7 +20,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-compression": "^1.0.2",
-    "express-handlebars": "^7.0.7",
+    "express-handlebars": "^7.1.2",
     "express-session": "^1.17.3",
     "mongodb": "^5.6.0",
     "mongoose": "^7.3.1",
